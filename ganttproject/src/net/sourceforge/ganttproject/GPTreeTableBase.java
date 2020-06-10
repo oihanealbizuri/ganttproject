@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package net.sourceforge.ganttproject;
 
+import biz.ganttproject.core.model.task.TaskDefaultColumn;
 import biz.ganttproject.core.option.ValidationException;
 import biz.ganttproject.core.table.ColumnList;
 import biz.ganttproject.core.table.ColumnList.Column;
@@ -1188,5 +1189,18 @@ public abstract class GPTreeTableBase extends JXTreeTable implements CustomPrope
     column.getTableColumnExt().setPreferredWidth(dimension.width);
     return dimension;
 
+  }
+
+  protected void configureMouseListener(MouseEvent mouseEvent){
+    int index = getTable().columnAtPoint(mouseEvent.getPoint());
+    if (index == -1) {
+      return;
+    }
+    if (mouseEvent.isPopupTrigger() || mouseEvent.getButton() != MouseEvent.BUTTON1) {
+      return;
+    }
+    if (mouseEvent.isAltDown() || mouseEvent.isShiftDown() || mouseEvent.isControlDown()) {
+      return;
+    }
   }
 }

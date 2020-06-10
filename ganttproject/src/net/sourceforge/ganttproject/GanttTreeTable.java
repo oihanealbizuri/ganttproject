@@ -112,19 +112,11 @@ public class GanttTreeTable extends GPTreeTableBase {
     getTableHeader().addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent mouseEvent) {
-        int index = getTable().columnAtPoint(mouseEvent.getPoint());
-        if (index == -1) {
-          return;
-        }
 
-        if (mouseEvent.isPopupTrigger() || mouseEvent.getButton() != MouseEvent.BUTTON1) {
-          return;
-        }
-        if (mouseEvent.isAltDown() || mouseEvent.isShiftDown() || mouseEvent.isControlDown()) {
-          return;
-        }
+        configureMouseListener(mouseEvent);
+
         final TableHeaderUiFacadeImpl tableHeader = getTableHeaderUiFacade();
-        final ColumnImpl column = tableHeader.findColumnByViewIndex(index);
+        final ColumnImpl column = tableHeader.findColumnByViewIndex(getTable().columnAtPoint(mouseEvent.getPoint()));
         final TaskDefaultColumn taskColumn = TaskDefaultColumn.find(column.getID());
 
         getUiFacade().getUndoManager().undoableEdit(GanttLanguage.getInstance().getText("task.sort"), new Runnable() {

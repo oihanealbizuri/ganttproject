@@ -23,15 +23,11 @@ import java.awt.event.MouseEvent;
 import java.util.*;
 
 import javax.swing.*;
-import javax.swing.event.TableColumnModelListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import biz.ganttproject.core.model.task.TaskDefaultColumn;
-import io.milton.resource.Resource;
 import net.sourceforge.ganttproject.chart.Chart;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.language.GanttLanguage;
@@ -141,21 +137,11 @@ public class ResourceTreeTable extends GPTreeTableBase {
     getTableHeader().addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent mouseEvent) {
-        int index = getTable().columnAtPoint(mouseEvent.getPoint());
-        if (index == -1){
-          return;
-        }
 
-        if (mouseEvent.isPopupTrigger() || mouseEvent.getButton() != MouseEvent.BUTTON1){
-          return;
-        }
-
-        if (mouseEvent.isAltDown() || mouseEvent.isShiftDown() || mouseEvent.isControlDown()){
-          return;
-        }
+        configureMouseListener(mouseEvent);
 
         final TableHeaderUiFacadeImpl tableHeader = getTableHeaderUiFacade();
-        final ColumnImpl column = tableHeader.findColumnByViewIndex(index);
+        final ColumnImpl column = tableHeader.findColumnByViewIndex(getTable().columnAtPoint(mouseEvent.getPoint()));
         final ResourceDefaultColumn resourceColumn = ResourceDefaultColumn.find(column.getID());
 
         getUiFacade().getUndoManager().undoableEdit(GanttLanguage.getInstance().getText("task.sort"), new Runnable() {
