@@ -28,6 +28,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import net.sourceforge.ganttproject.chart.Chart;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.language.GanttLanguage;
@@ -147,20 +148,20 @@ public class ResourceTreeTable extends GPTreeTableBase {
         getUiFacade().getUndoManager().undoableEdit(GanttLanguage.getInstance().getText("task.sort"), new Runnable() {
           @Override
           public void run() {
+            Comparator<?> comparator;
 
             if (resourceColumn == ResourceDefaultColumn.NAME) {
 
               if (column.getSort() == SortOrder.ASCENDING) {
                 column.setSort(SortOrder.DESCENDING);
-                resourceColumn.setSortComparator(new AscendingNameComparator().reversed());
+                comparator = new AscendingNameComparator().reversed();
               } else {
                 column.setSort(SortOrder.ASCENDING);
-                resourceColumn.setSortComparator(new AscendingNameComparator());
+                comparator = new AscendingNameComparator();
               }
 
               ArrayList<HumanResource> sorted = new ArrayList<>(getProject().getHumanResourceManager().getResources());
-              sorted.sort((Comparator<HumanResource>)resourceColumn.getSortComparator());
-
+              sorted.sort((Comparator<? super HumanResource>) comparator);
 
               for(int j = sorted.size()-1; j>=0; j--){
                 HumanResource h = sorted.get(j);
