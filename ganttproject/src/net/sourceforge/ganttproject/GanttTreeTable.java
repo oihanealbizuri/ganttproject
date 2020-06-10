@@ -78,10 +78,6 @@ public class GanttTreeTable extends GPTreeTableBase {
     });
   }
 
-  private UIFacade getUiFacade() {
-    return myUIfacade;
-  }
-
   @Override
   protected List<Column> getDefaultColumns() {
     return TaskDefaultColumn.getColumnStubs();

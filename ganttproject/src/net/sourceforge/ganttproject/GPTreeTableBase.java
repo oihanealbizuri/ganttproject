@@ -124,6 +124,9 @@ public abstract class GPTreeTableBase extends JXTreeTable implements CustomPrope
   // a currently selected edit cell.
   // See comments in editCellAt method below.
   private final AtomicBoolean isEditingStartExpected = new AtomicBoolean(false);
+  protected final UIFacade getUiFacade() {
+    return myUiFacade;
+  }
   protected void setEditingStartExpected(boolean value) {
     this.isEditingStartExpected.set(value);
   }

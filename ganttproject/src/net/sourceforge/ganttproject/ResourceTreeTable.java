@@ -20,10 +20,7 @@ package net.sourceforge.ganttproject;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.event.TableColumnModelListener;
@@ -89,10 +86,6 @@ public class ResourceTreeTable extends GPTreeTableBase {
     myResourceTreeModel.setSelectionModel(getTreeSelectionModel());
   }
 
-  private UIFacade getUiFacade() {
-    return myUiFacade;
-  }
-
   @Override
   public String getToolTipText(MouseEvent event) {
     int column = columnAtPoint(event.getPoint());
@@ -138,14 +131,6 @@ public class ResourceTreeTable extends GPTreeTableBase {
     }
   }
 
-  private static class DescendingNameComparator implements Comparator<HumanResource> {
-    @Override
-    public int compare(HumanResource o1, HumanResource o2) {
-      return o2.getName().compareTo(o1.getName());
-    }
-  }
-
-
   /** Initialize the treetable. Addition of various listeners, tree's icons. */
   @Override
   protected void doInit() {
@@ -181,17 +166,15 @@ public class ResourceTreeTable extends GPTreeTableBase {
 
               if (column.getSort() == SortOrder.ASCENDING) {
                 column.setSort(SortOrder.DESCENDING);
-                resourceColumn.setSortComparator(new DescendingNameComparator());
+                resourceColumn.setSortComparator(new AscendingNameComparator().reversed());
               } else {
                 column.setSort(SortOrder.ASCENDING);
                 resourceColumn.setSortComparator(new AscendingNameComparator());
               }
 
-              ArrayList<HumanResource> sorted = new ArrayList<>();
-              getProject().getHumanResourceManager().getResources().forEach( h -> {
-                sorted.add(h);
-              });
-              sorted.sort((Comparator<HumanResource>) resourceColumn.getSortComparator());
+              ArrayList<HumanResource> sorted = new ArrayList<>(getProject().getHumanResourceManager().getResources());
+              sorted.sort((Comparator<HumanResource>)resourceColumn.getSortComparator());
+
 
               for(int j = sorted.size()-1; j>=0; j--){
                 HumanResource h = sorted.get(j);
