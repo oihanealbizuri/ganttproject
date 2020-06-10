@@ -159,13 +159,6 @@ public class GanttTreeTable extends GPTreeTableBase {
     getScrollPane().getViewport().scrollRectToVisible(rect);
   }
 
-  private class ModelListener implements TableModelListener {
-    @Override
-    public void tableChanged(TableModelEvent e) {
-      getUiFacade().getGanttChart().reset();
-    }
-  }
-
   void editSelectedTask() {
     TreePath selectedPath = getTree().getTreeSelectionModel().getSelectionPath();
     Column column = getTableHeaderUiFacade().findColumnByID(TaskDefaultColumn.NAME.getStub().getID());

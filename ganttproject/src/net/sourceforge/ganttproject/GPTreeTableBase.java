@@ -52,13 +52,7 @@ import org.jdesktop.swingx.treetable.TreeTableModel;
 
 import javax.annotation.Nullable;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableColumnModelEvent;
-import javax.swing.event.TableColumnModelListener;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
+import javax.swing.event.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -1201,6 +1195,13 @@ public abstract class GPTreeTableBase extends JXTreeTable implements CustomPrope
     }
     if (mouseEvent.isAltDown() || mouseEvent.isShiftDown() || mouseEvent.isControlDown()) {
       return;
+    }
+  }
+
+  protected class ModelListener implements TableModelListener {
+    @Override
+    public void tableChanged(TableModelEvent e) {
+      getUiFacade().getGanttChart().reset();
     }
   }
 }

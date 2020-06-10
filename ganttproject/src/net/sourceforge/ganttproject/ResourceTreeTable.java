@@ -183,13 +183,6 @@ public class ResourceTreeTable extends GPTreeTableBase {
     });
   }
 
-  private class ModelListener implements TableModelListener {
-    @Override
-    public void tableChanged(TableModelEvent e) {
-      getUiFacade().getGanttChart().reset();
-    }
-  }
-
   @Override
   protected void onProjectOpened() {
     super.onProjectOpened();
