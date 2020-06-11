@@ -18,11 +18,7 @@ along with GanttProject.  If not, see <http://www.gnu.org/licenses/>.
  */
 package net.sourceforge.ganttproject;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -145,6 +141,22 @@ public class ResourceTreeTableModel extends DefaultTreeTableModel {
     }
     // this.setRoot(root);
 
+  }
+
+  public void updateResources(ArrayList<HumanResource> sorted){
+    for(int j = sorted.size()-1; j>=0; j--){
+      HumanResource h = sorted.get(j);
+      int idxo =  myResourceManager.getResources().indexOf(h);
+      int idxs = sorted.indexOf(h);
+      int delta = idxs - idxo;
+      for(int i = 0; i < Math.abs(delta) ; i++){
+        if (idxs < idxo) {
+          moveUp(h);
+        }  else {
+          moveDown(h);
+        }
+      }
+    };
   }
 
   public ResourceNode getNodeForResource(final HumanResource hr) {
