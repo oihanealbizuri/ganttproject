@@ -1185,17 +1185,19 @@ public abstract class GPTreeTableBase extends JXTreeTable implements CustomPrope
 
   }
 
-  protected void configureMouseListener(MouseEvent mouseEvent){
+  protected int configureMouseListener(MouseEvent mouseEvent){
     int index = getTable().columnAtPoint(mouseEvent.getPoint());
+    int result = 0;
     if (index == -1) {
-      return;
+      result = -1;
     }
     if (mouseEvent.isPopupTrigger() || mouseEvent.getButton() != MouseEvent.BUTTON1) {
-      return;
+      result = -1;
     }
     if (mouseEvent.isAltDown() || mouseEvent.isShiftDown() || mouseEvent.isControlDown()) {
-      return;
+      result = -1;
     }
+    return result;
   }
 
   protected class ModelListener implements TableModelListener {

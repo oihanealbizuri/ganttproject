@@ -113,7 +113,9 @@ public class GanttTreeTable extends GPTreeTableBase {
       @Override
       public void mouseClicked(MouseEvent mouseEvent) {
 
-        configureMouseListener(mouseEvent);
+        if (configureMouseListener(mouseEvent) == -1) {
+          return;
+        }
 
         final TableHeaderUiFacadeImpl tableHeader = getTableHeaderUiFacade();
         final ColumnImpl column = tableHeader.findColumnByViewIndex(getTable().columnAtPoint(mouseEvent.getPoint()));
