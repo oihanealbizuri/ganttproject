@@ -162,23 +162,8 @@ public class ResourceTreeTable extends GPTreeTableBase {
                 comparator = new AscendingNameComparator();
               }
 
-              ArrayList<HumanResource> sorted = new ArrayList<>(getProject().getHumanResourceManager().getResources());
+              List<HumanResource> sorted = new ArrayList<>(getProject().getHumanResourceManager().getResources());
               sorted.sort((Comparator<? super HumanResource>) comparator);
-
-//              for(int j = sorted.size()-1; j>=0; j--){
-//                HumanResource h = sorted.get(j);
-//                int idxo =  getProject().getHumanResourceManager().getResources().indexOf(h);
-//                int idxs = sorted.indexOf(h);
-//                int delta = idxs - idxo;
-//                for(int i = 0; i < Math.abs(delta) ; i++){
-//                  if (idxs < idxo) {
-//                    myResourceTreeModel.moveUp(h);
-//                  }  else {
-//                    myResourceTreeModel.moveDown(h);
-//                  }
-//                }
-//              };
-
               myResourceTreeModel.updateResources(sorted);
             }
           }

@@ -143,20 +143,10 @@ public class ResourceTreeTableModel extends DefaultTreeTableModel {
 
   }
 
-  public void updateResources(ArrayList<HumanResource> sorted){
-    for(int j = sorted.size()-1; j>=0; j--){
-      HumanResource h = sorted.get(j);
-      int idxo =  myResourceManager.getResources().indexOf(h);
-      int idxs = sorted.indexOf(h);
-      int delta = idxs - idxo;
-      for(int i = 0; i < Math.abs(delta) ; i++){
-        if (idxs < idxo) {
-          moveUp(h);
-        }  else {
-          moveDown(h);
-        }
-      }
-    };
+  public void updateResources(List<HumanResource> sorted){
+    myResourceManager.clear();
+    sorted.forEach(hr -> myResourceManager.add(hr));
+    updateResources();
   }
 
   public ResourceNode getNodeForResource(final HumanResource hr) {
