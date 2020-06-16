@@ -159,7 +159,7 @@ public class ResourceTreeTable extends GPTreeTableBase {
                 comparator = new AscendingNameComparator();
               }
 
-              List<HumanResource> sorted = new ArrayList<>(getProject().getHumanResourceManager().getResources());
+              List<HumanResource> sorted = new ArrayList<>(getProject().getHumanResourceManager().getResources());  
               sorted.sort(comparator);
               myResourceTreeModel.updateResources(sorted);
             }
